@@ -7,6 +7,9 @@ from sklearn.model_selection import train_test_split
 from src.logger import logging
 from src.exception import CustomException
 
+from src.components.data_transformation import DataTransformation
+from src.components.data_transformation import DataTransformationConfig
+
 @dataclass
 class DataIngestionConfig:
     raw_data_path: str = os.path.join("artifacts", "raw.csv")
@@ -40,4 +43,7 @@ class DataIngestion:
 
 if __name__ == "__main__":
     ingestion = DataIngestion()
-    ingestion.initiate_data_ingestion()
+    train_data,test_data=ingestion.initiate_data_ingestion()
+
+    data_transformation=DataTransformation()
+    data_transformation.initiate_data_transformation(train_data,test_data)

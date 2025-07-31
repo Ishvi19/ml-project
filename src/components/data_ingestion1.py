@@ -1,50 +1,50 @@
-   import sys
-    import os
-    sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
-    from ..exception import CustomException
-    from ..logger import logging
-    import pandas as pd
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
+from ..exception import CustomException
+from ..logger import logging
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from dataclasses import dataclass
 
-    from sklearn.model_selection import tain_test_split
-    from dataclasses import dataclass
+@dataclass
+class DataIngestionConfig:
+    train_data_split: str = os.path.join('artifact', "train.csv")
+    test_data_split: str = os.path.join('artifact', "test.csv")
+    raw_data_split: str = os.path.join('artifact', "data.csv")
 
-    @dataclass
-    class DataIngestionConfig:
-        train_data_split: str=os.path.join('artifact',"train.csv")
-        test_data_split: str=os.path.join('artifact',"test.csv")
-        raw_data_split: str=os.path.join('artifact',"data.csv")
+class DataIngestion:
+    def __init__(self):
+        self.ingestion_config = DataIngestionConfig()
 
-    class DataIngestion:
-        def __init__(self):
-            self.ingestion_config=DataIngestionConfig()
-        def initiate_data_ingestion(self):
-            logging.info("Enter the data ingestion method or component")
-            try:
-                df=pd.read_csv('C:\mlproject\notebook\data\stud.csv')
-                logging.info('Read the dataset as dataframe')
+    def initiate_data_ingestion(self):
+        logging.info("Enter the data ingestion method or component")
+        try:
+            df = pd.read_csv(r'C:\mlproject\notebook\data\stud.csv')
+            logging.info('Read the dataset as dataframe')
 
-                os.makedirs((self.ingstion_config.train_data_path),exist_ok=True)
+            os.makedirs(os.path.dirname(self.ingestion_config.train_data_split), exist_ok=True)
 
-                df.to_csv(self.ingestion_config.raw_data_path.index=False,header=True)
+            df.to_csv(self.ingestion_config.raw_data_split, index=False, header=True)
+            logging.info("Train test split initiated")
 
-                logging.info("Train test split initiated")
-                train_set,test_set=train_test_split(df,test_size=0.2,random_state=42)
-                
-                train_set.to_csv(self.ingestion_config.train_data_path.index=False,header=True)
-                test_set.to_csv(self.ingestion_config.test_data_path.index=False,header=True)
+            train_set, test_set = train_test_split(df, test_size=0.2, random_state=42)
 
-                logging.info("Ingestion of the data is completed")
+            train_set.to_csv(self.ingestion_config.train_data_split, index=False, header=True)
+            test_set.to_csv(self.ingestion_config.test_data_split, index=False, header=True)
 
-                return(
-                    self.ingestion_config.train_data_path,
-                    self.ingestion_config.test_data_path
-                )
+            logging.info("Ingestion of the data is completed")
 
-            except Exception as e:
-                raise CustomException(e,sys)   
+            return (
+                self.ingestion_config.train_data_split,
+                self.ingestion_config.test_data_split
+            )
 
-    if __name__=="__main__":
-        obj.DataIngestion()
-        obj.initiate_data_ingestion()
+        except Exception as e:
+            raise CustomException(e, sys)
+
+if __name__ == "__main__":
+    obj = DataIngestion()
+    obj.initiate_data_ingestion()
 
             
