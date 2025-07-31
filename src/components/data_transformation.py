@@ -36,7 +36,7 @@ class DataTransformation:
             num_pipeline=Pipeline(
                 steps=[
                     ("impute",SimpleImputer(strategy="median")),
-                    ("scaler",StandardScaler())
+                    ("scaler",StandardScaler(with_mean=False))
                 ]
             )
             cat_pipeline=Pipeline(
@@ -44,7 +44,7 @@ class DataTransformation:
                 steps=[
                     ("imputer",SimpleImputer(strategy="most_frequent")),
                     ("one_hot_encoder",OneHotEncoder()),
-                    ("scaler",StandardScaler())
+                    ("scaler",StandardScaler(with_mean=False))
                 ]
             )
 
@@ -107,5 +107,7 @@ class DataTransformation:
             )
             
         except Exception as e:
-            raise CustomException(e,sys)   
+             _, _, exc_tb = sys.exc_info()
+             raise CustomException(e, exc_tb)
+        
 
