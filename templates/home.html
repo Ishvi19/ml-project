@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Student Exam Performance Indicator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 30px;
+        }
+        h1 {
+            font-size: 28px;
+            font-weight: bold;
+        }
+        h2 {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+        input, select {
+            margin-bottom: 10px;
+            padding: 5px;
+            width: 300px;
+        }
+        button {
+            margin-top: 10px;
+            padding: 8px 12px;
+            font-weight: bold;
+        }
+        .prediction {
+            margin-top: 30px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Student Exam Performance Indicator</h1>
+    <h2>Student Exam Performance Prediction</h2>
+
+    <form action="/predictdata" method="post">
+        <label>Gender</label>
+        <select name="gender" required>
+            <option value="">Select your Gender</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+        </select>
+
+        <label>Race or Ethnicity</label>
+        <select name="ethnicity" required>
+            <option value="">Select Ethnicity</option>
+            <option value="group A">Group A</option>
+            <option value="group B">Group B</option>
+            <option value="group C">Group C</option>
+            <option value="group D">Group D</option>
+            <option value="group E">Group E</option>
+        </select>
+
+        <label>Parental Level of Education</label>
+        <select name="parental_level_of_education" required>
+            <option value="">Select Parent Education</option>
+            <option value="associate's degree">Associate's Degree</option>
+            <option value="bachelor's degree">Bachelor's Degree</option>
+            <option value="master's degree">Master's Degree</option>
+            <option value="some college">Some College</option>
+            <option value="some high school">Some High School</option>
+            <option value="high school">High School</option>
+        </select>
+
+        <label>Lunch Type</label>
+        <select name="lunch" required>
+            <option value="">Select Lunch Type</option>
+            <option value="standard">Standard</option>
+            <option value="free/reduced">Free/Reduced</option>
+        </select>
+
+        <label>Test Preparation Course</label>
+        <select name="test_preparation_course" required>
+            <option value="">Select Test_course</option>
+            <option value="none">None</option>
+            <option value="completed">Completed</option>
+        </select>
+
+        <label>Reading Score out of 100</label>
+        <input type="number" name="reading_score" placeholder="Enter your Reading Score" min="0" max="100" required>
+
+        <label>Writing Score out of 100</label>
+        <input type="number" name="writing_score" placeholder="Enter your Writing Score" min="0" max="100" required>
+
+        <button type="submit">Predict your Maths Score</button>
+    </form>
+
+    <div class="prediction">
+        THE prediction is {{ results }}
+    </div>
+
+</body>
+</html>
